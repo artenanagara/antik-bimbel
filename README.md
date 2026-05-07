@@ -1,58 +1,194 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Antik Bimbel — Platform Try Out SKD CPNS
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Platform try out online berbasis web untuk persiapan Seleksi Kompetensi Dasar (SKD) CPNS. Dibangun dengan Laravel 13 dan Tailwind CSS v4, mencakup panel admin untuk manajemen soal & peserta, serta panel siswa untuk mengerjakan try out secara real-time.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Tech Stack
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Layer | Teknologi |
+|---|---|
+| Backend | Laravel 13, PHP 8.3 |
+| Frontend | Blade, Tailwind CSS v4, Vite |
+| Database | MySQL / SQLite |
+| Icons | Lucide Icons |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Learning Laravel
+## Fitur Utama
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Panel Admin
+- **Dashboard** — ringkasan jumlah siswa, soal, try out, dan pengerjaan
+- **Manajemen Batch** — kelola kelas/gelombang peserta
+- **Manajemen Siswa** — tambah, edit, aktifkan/nonaktifkan siswa; bulk action
+- **Bank Soal** — buat soal dengan rich text editor, gambar, sub-test (TWK/TIU/TKP), kategori, dan pilihan jawaban; bulk action; import via Excel
+- **Manajemen Try Out** — buat try out tipe Simulasi penuh atau Sub Test; kelola soal dari 3 sumber: buat manual, pilih dari bank soal, atau import; atur passing grade per sub-test; publish / draft / tutup; bulk action
+- **Laporan Hasil** — lihat semua hasil pengerjaan siswa, skor per sub-test, detail jawaban
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Panel Siswa
+- **Dashboard** — ringkasan riwayat & try out tersedia
+- **Try Out** — lihat detail try out, mulai ujian, timer real-time, tandai soal (flag), navigasi antar soal, auto-submit saat waktu habis
+- **Hasil** — skor total & per sub-test, perbandingan dengan nilai ambang batas
+- **Pembahasan** — review jawaban lengkap dengan kunci jawaban, pembahasan, filter per sub-test & kategori
+- **Riwayat** — semua riwayat pengerjaan
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+## Instalasi
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+### 1. Clone repository
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/artenanagara/antik-bimbel.git
+cd antik-bimbel
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+### 2. Install dependencies
 
-## Contributing
+```bash
+composer install
+npm install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 3. Setup environment
 
-## Code of Conduct
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Edit `.env` sesuaikan koneksi database:
 
-## Security Vulnerabilities
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=antik_bimbel
+DB_USERNAME=root
+DB_PASSWORD=
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Migrasi & seeder
 
-## License
+```bash
+php artisan migrate --seed
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 5. Storage link
+
+```bash
+php artisan storage:link
+```
+
+### 6. Build assets
+
+```bash
+npm run build
+# atau untuk development:
+npm run dev
+```
+
+### 7. Jalankan server
+
+```bash
+php artisan serve
+```
+
+Akses di **http://localhost:8000**
+
+---
+
+## Akun Default
+
+Akun berikut dibuat otomatis saat menjalankan `php artisan migrate --seed`.
+
+### Admin
+
+| Field | Value |
+|---|---|
+| URL | `/login` |
+| Username | `admin` |
+| Password | `admin123` |
+| Role | Administrator |
+
+### Siswa (Contoh)
+
+| Nama | Username | Password |
+|---|---|---|
+| Budi Santoso | `budi.santoso` | `siswa123` |
+| Siti Rahayu | `siti.rahayu` | `siswa123` |
+| Ahmad Fauzi | `ahmad.fauzi` | `siswa123` |
+
+> Semua siswa contoh terdaftar di batch **"Batch SKD Mei 2026"**.
+
+---
+
+## Kategori Soal
+
+Kategori di-seed otomatis bersama database.
+
+| Sub-Test | Kategori |
+|---|---|
+| **TWK** | Nasionalisme, Integritas, Bela Negara, Pilar Negara, Bahasa Indonesia |
+| **TIU** | Verbal, Numerik, Figural, Analogi, Silogisme, Analitis, Deret Angka, Perbandingan Kuantitatif, Soal Cerita |
+| **TKP** | Pelayanan Publik, Jejaring Kerja, Sosial Budaya, Teknologi Informasi dan Komunikasi, Profesionalisme, Anti Radikalisme |
+
+---
+
+## Sistem Penilaian
+
+Mengikuti standar CAT BKN:
+
+| Sub-Test | Benar | Salah / Tidak Dijawab |
+|---|---|---|
+| TWK | +5 | 0 |
+| TIU | +5 | 0 |
+| TKP | Skor pilihan (1–5) | 0 |
+
+---
+
+## Import Soal
+
+Admin dapat mengimpor soal secara massal via file Excel (`.xlsx`). Format kolom:
+
+| Kolom | Keterangan |
+|---|---|
+| `sub_test` | TWK / TIU / TKP |
+| `question_text` | Teks soal |
+| `explanation` | Pembahasan (opsional) |
+| `option_a` s/d `option_e` | Teks pilihan jawaban |
+| `correct` | Huruf jawaban benar (a–e), khusus TWK & TIU |
+| `score_a` s/d `score_e` | Skor tiap pilihan, khusus TKP |
+
+---
+
+## Struktur Direktori Penting
+
+```
+app/
+├── Http/Controllers/
+│   ├── Admin/          # TryoutController, QuestionController, StudentController, ...
+│   └── Student/        # TryoutController, ResultController, ...
+├── Models/             # Tryout, Question, Student, StudentTryout, ...
+└── Services/
+    ├── TryoutScoringService.php
+    └── QuestionImportService.php
+
+resources/views/
+├── admin/              # Panel admin
+├── student/            # Panel siswa
+├── layouts/            # admin.blade.php, student.blade.php
+└── auth/               # login.blade.php
+
+database/
+├── migrations/
+└── seeders/
+    ├── DatabaseSeeder.php
+    └── QuestionCategorySeeder.php
+```
+
+---
+
+## Lisensi
+
+MIT License — bebas digunakan dan dimodifikasi untuk keperluan pendidikan.
